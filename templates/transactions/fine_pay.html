@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Fine Payment</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/transactions">Transactions</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <div class="glass-card" style="max-width: 600-px;">
+            <h2>Fine Payment</h2>
+            <p style="margin-bottom: 2rem;">Clear outstanding dues for returned items.</p>
+
+            {% if error %}
+            <div class="error-banner">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="/transactions/fine-pay" method="post">
+                <input type="hidden" name="transaction_id" value="{{ transaction.id }}">
+
+                <div class="form-group">
+                    <label>Book Name</label>
+                    <input type="text" value="{{ transaction.book.name }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Issue Date</label>
+                    <input type="text" value="{{ transaction.issue_date }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Actual Return Date</label>
+                    <input type="text" value="{{ transaction.actual_return_date }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Fine Amount Due</label>
+                    <input type="text" value="${{ transaction.fine_amount }}" disabled
+                        style="font-weight: 700; color: #ef4444; font-size: 1.2rem;">
+                </div>
+
+                {% if transaction.fine_amount > 0 %}
+                <div class="form-group" style="flex-direction: row; align-items: center; gap: 0.5rem; margin: 1rem 0;">
+                    <input type="checkbox" id="fine_paid" name="fine_paid" required>
+                    <label for="fine_paid">I confirm the fine has been paid.</label>
+                </div>
+                {% endif %}
+
+                <div class="form-group">
+                    <label for="remarks">Payment Remarks (Optional)</label>
+                    <textarea id="remarks" name="remarks"
+                        placeholder="Enter transaction ID or notes...">{{ transaction.remarks or '' }}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Confirm Payment & Close
+                    Transaction</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

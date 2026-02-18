@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Fine Collection Report</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/reports">Reports</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade" style="max-width: 1100-px;">
+        <div style="text-align: left; margin-bottom: 2rem;">
+            <h2>Fine Collection Report</h2>
+            <p>Summary of fines collected and outstanding dues.</p>
+        </div>
+
+        <div class="glass-card" style="max-width: 1050-px; padding: 1.5rem;">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book Name</th>
+                            <th>User</th>
+                            <th>Actual Return</th>
+                            <th>Fine Amount</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if transactions %}
+                        {% for tx in transactions %}
+                        <tr>
+                            <td>{{ tx.book.name }}</td>
+                            <td>{{ tx.user.name }}</td>
+                            <td>{{ tx.actual_return_date }}</td>
+                            <td class="status-issued">${{ tx.fine_amount }}</td>
+                            <td>
+                                <span class="status-{{ 'active' if tx.fine_paid else 'issued' }}">
+                                    {{ 'Paid' if tx.fine_paid else 'Pending' }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; opacity: 0.7;">No fine records found.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

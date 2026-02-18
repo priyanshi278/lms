@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Add Book/Movie</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/maintenance">Maintenance</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <div class="glass-card" style="max-width: 600-px;">
+            <h2>Add New Book / Movie</h2>
+            <p style="margin-bottom: 2rem;">Add a new item to the library collection.</p>
+
+            {% if error %}
+            <div class="error-banner">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+            {% endif %}
+            {% if success %}
+            <div class="success-banner">
+                <i class="fas fa-check-circle"></i>
+                {{ success }}
+            </div>
+            {% endif %}
+
+            <form action="/maintenance/add-book" method="post">
+                <div class="form-group">
+                    <label>Item Type *</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="type" value="Book" checked>
+                            <span>Book</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="type" value="Movie">
+                            <span>Movie</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Book/Movie Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter name">
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author/Director *</label>
+                    <input type="text" id="author" name="author" required placeholder="Enter author or director">
+                </div>
+
+                <div class="form-group">
+                    <label for="serial_number">Serial Number *</label>
+                    <input type="text" id="serial_number" name="serial_number" required placeholder="e.g. B001">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required>
+                        <option value="" disabled selected>Select category</option>
+                        <option value="Tech">Tech</option>
+                        <option value="Science">Science</option>
+                        <option value="Fiction">Fiction</option>
+                        <option value="History">History</option>
+                        <option value="Management">Management</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Add Item</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

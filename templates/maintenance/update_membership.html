@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Update Membership</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/maintenance">Maintenance</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <div class="glass-card" style="max-width: 600-px;">
+            <h2>Update Membership</h2>
+            <p style="margin-bottom: 2rem;">Extend or cancel existing memberships.</p>
+
+            {% if error %}
+            <div class="error-banner">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+            {% endif %}
+            {% if success %}
+            <div class="success-banner">
+                <i class="fas fa-check-circle"></i>
+                {{ success }}
+            </div>
+            {% endif %}
+
+            <!-- Step 1: Fetch Details -->
+            <form action="/maintenance/update-membership/fetch" method="post"
+                style="margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 2rem;">
+                <div class="form-group">
+                    <label for="membership_number">Membership Number *</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="membership_number" name="membership_number"
+                            value="{{ membership.membership_number if membership else '' }}" required
+                            placeholder="e.g. M001" style="flex: 1;">
+                        <button type="submit" class="btn btn-secondary">Fetch Details</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if membership %}
+            <!-- Step 2: Update View -->
+            <form action="/maintenance/update-membership" method="post">
+                <input type="hidden" name="membership_number" value="{{ membership.membership_number }}">
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" value="{{ membership.name }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Current Expiry Date</label>
+                    <input type="text" value="{{ membership.expiry_date }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Action</label>
+                    <div class="radio-group" style="flex-direction: column; align-items: flex-start; gap: 0.75rem;">
+                        <label class="radio-item">
+                            <input type="radio" name="action" value="extend" checked>
+                            <span>Extend by 6 Months</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="action" value="cancel">
+                            <span>Cancel Membership</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Update Membership</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

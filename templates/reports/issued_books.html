@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Issued Books Report</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/reports">Reports</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade" style="max-width: 1100-px;">
+        <div style="text-align: left; margin-bottom: 2rem;">
+            <h2>Issued Books Report</h2>
+            <p>List of all books and movies currently out on loan.</p>
+        </div>
+
+        <div class="glass-card" style="max-width: 1050-px; padding: 1.5rem;">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book Name</th>
+                            <th>Issued To</th>
+                            <th>Issue Date</th>
+                            <th>Expected Return</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if transactions %}
+                        {% for tx in transactions %}
+                        <tr>
+                            <td>{{ tx.book.name }}</td>
+                            <td>{{ tx.user.name }}</td>
+                            <td>{{ tx.issue_date }}</td>
+                            <td>{{ tx.return_date }}</td>
+                            <td><span style="color: #f59e0b; font-weight: 600;">{{ tx.status }}</span></td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; opacity: 0.7;">No issued items found.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

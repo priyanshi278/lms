@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Return Book</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/transactions">Transactions</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <div class="glass-card" style="max-width: 600-px;">
+            <h2>Return Book / Movie</h2>
+            <p style="margin-bottom: 2rem;">Process a return and check for any outstanding fines.</p>
+
+            {% if error %}
+            <div class="error-banner">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <!-- Step 1: Fetch by Serial -->
+            <form action="/transactions/return-book/fetch" method="post"
+                style="margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 2rem;">
+                <div class="form-group">
+                    <label for="serial_number">Serial Number *</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="serial_number" name="serial_number"
+                            value="{{ transaction.book.serial_number if transaction else '' }}" required
+                            placeholder="e.g. B001" style="flex: 1;">
+                        <button type="submit" class="btn btn-secondary">Fetch Details</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if transaction %}
+            <!-- Step 2: Confirm Return -->
+            <form action="/transactions/return-book" method="post">
+                <input type="hidden" name="transaction_id" value="{{ transaction.id }}">
+
+                <div class="form-group">
+                    <label>Book Name</label>
+                    <input type="text" value="{{ transaction.book.name }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Author / Director</label>
+                    <input type="text" value="{{ transaction.book.author }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Issue Date</label>
+                    <input type="text" value="{{ transaction.issue_date }}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="actual_return_date">Return Date *</label>
+                    <input type="date" id="actual_return_date" name="actual_return_date" value="{{ today }}" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Confirm Return</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

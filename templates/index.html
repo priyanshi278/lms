@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibGuard LMS - Welcome</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">LibGuard LMS</div>
+        <div class="nav-links">
+            <a href="/about">About</a>
+            <a href="/signup" class="btn btn-secondary">Sign Up</a>
+            <a href="/login" class="btn btn-primary" style="margin-left: 1rem;">Login</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <!-- Hero Section -->
+        <header style="padding: 4rem 0; text-align: center;">
+            <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.2;">
+                Modern Library Management <br>
+                <span
+                    style="background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Designed
+                    for Performance.</span>
+            </h1>
+            <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 2.5rem;">
+                A comprehensive solution to manage books, memberships, and transactions with a premium user experience.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="/signup" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">Get Started
+                    Now</a>
+                <a href="/about" class="btn btn-secondary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">Learn
+                    More</a>
+            </div>
+        </header>
+
+        <!-- Feature Cards -->
+        <section
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem;">
+            <div class="glass-card">
+                <div
+                    style="width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <i class="fas fa-shield-alt" style="color: #818cf8; font-size: 1.5rem;"></i>
+                </div>
+                <h3>Secure Access</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Role-based permissions ensure that sensitive administrative functions remain protected and
+                    user-friendly.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <div
+                    style="width: 50px; height: 50px; background: rgba(192, 132, 252, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <i class="fas fa-bolt" style="color: #c084fc; font-size: 1.5rem;"></i>
+                </div>
+                <h3>Real-time Tracking</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Monitor book availability, active issues, and pending returns with our lightning-fast transaction
+                    engine.
+                </p>
+            </div>
+
+            <div class="glass-card">
+                <div
+                    style="width: 50px; height: 50px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                    <i class="fas fa-chart-line" style="color: #10b981; font-size: 1.5rem;"></i>
+                </div>
+                <h3>Smart Insights</h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+                    Generate comprehensive reports on fine collections and membership growth with a single click.
+                </p>
+            </div>
+        </section>
+
+        <footer
+            style="margin-top: 6rem; padding-top: 3rem; border-top: 1px solid var(--glass-border); text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+            &copy; 2026 LibGuard Library Management System. Built for excellence.
+        </footer>
+    </div>
+</body>
+
+</html>

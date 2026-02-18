@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Book Available</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/transactions">Transactions</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade" style="max-width: 1000-px;">
+        <div class="glass-card" style="max-width: 800-px; margin-bottom: 2rem;">
+            <h2>Search Catalog</h2>
+            <p style="margin-bottom: 2rem;">Check availability of books and movies.</p>
+
+            {% if error %}
+            <div class="error-banner">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="/transactions/book-available" method="post"
+                style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end;">
+                <div class="form-group">
+                    <label for="search_by">Search By</label>
+                    <select id="search_by" name="search_by">
+                        <option value="name">Book Name</option>
+                        <option value="author">Author</option>
+                        <option value="category">Category</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="search_value">Search Value</label>
+                    <input type="text" id="search_value" name="search_value" placeholder="Enter keywords...">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+
+        {% if books is not none %}
+        <div class="glass-card" style="max-width: 950-px; padding: 1.5rem;">
+            <h3>Results</h3>
+            {% if books %}
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Author</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                        <tr>
+                            <td>{{ book.name }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.category }}</td>
+                            <td>{{ book.type }}</td>
+                            <td>
+                                <span class="status-{{ book.status }}">
+                                    {{ book.status }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if book.status == 'available' %}
+                                <a href="/transactions/issue-book?book={{ book.name }}" class="btn btn-secondary"
+                                    style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Issue</a>
+                                {% else %}
+                                <button class="btn btn-secondary" disabled
+                                    style="padding: 0.4rem 0.8rem; font-size: 0.8rem; opacity: 0.5;">Issue</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p style="margin-top: 1rem; opacity: 0.7;">No items found matching your search.</p>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

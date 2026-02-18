@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            {% if user.role == 'admin' %}
+            <a href="/maintenance">Maintenance</a>
+            {% endif %}
+            <a href="/transactions">Transactions</a>
+            <a href="/reports">Reports</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <div style="text-align: left; margin-bottom: 2rem;">
+            <h2>Welcome, {{ user.name }}!</h2>
+            <p>Role: <span style="text-transform: capitalize; font-weight: 600; color: var(--primary-color);">{{
+                    user.role }}</span></p>
+        </div>
+
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250-px, 1fr)); gap: 2rem; margin-top: 2rem;">
+
+            {% if user.role == 'admin' %}
+            <div class="glass-card" style="margin: 0; text-align: left; transition: transform 0.3s;">
+                <i class="fas fa-tools" style="font-size: 2rem; margin-bottom: 1rem; color: var(--primary-color);"></i>
+                <h3>Maintenance</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Manage books, memberships, and users.</p>
+                <a href="/maintenance" class="btn btn-primary" style="width: 100%; box-sizing: border-box;">Open
+                    Module</a>
+            </div>
+            {% endif %}
+
+            <div class="glass-card" style="margin: 0; text-align: left; transition: transform 0.3s;">
+                <i class="fas fa-exchange-alt" style="font-size: 2rem; margin-bottom: 1rem; color: #10b981;"></i>
+                <h3>Transactions</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">Issue, return books, and pay fines.</p>
+                <a href="/transactions" class="btn btn-primary"
+                    style="width: 100%; box-sizing: border-box; background: #10b981;">Open Module</a>
+            </div>
+
+            <div class="glass-card" style="margin: 0; text-align: left; transition: transform 0.3s;">
+                <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 1rem; color: #f59e0b;"></i>
+                <h3>Reports</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 1.5rem;">View book status and fine reports.</p>
+                <a href="/reports" class="btn btn-primary"
+                    style="width: 100%; box-sizing: border-box; background: #f59e0b;">Open Module</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

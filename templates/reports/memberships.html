@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Membership Report</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/reports">Reports</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade" style="max-width: 1100-px;">
+        <div style="text-align: left; margin-bottom: 2rem;">
+            <h2>Membership Report</h2>
+            <p>List of all registered library members and their membership status.</p>
+        </div>
+
+        <div class="glass-card" style="max-width: 1050-px; padding: 1.5rem;">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Member ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Start Date</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if memberships %}
+                        {% for m in memberships %}
+                        <tr>
+                            <td>{{ m.membership_number }}</td>
+                            <td>{{ m.name }}</td>
+                            <td>{{ m.phone }}</td>
+                            <td>{{ m.start_date }}</td>
+                            <td>{{ m.expiry_date }}</td>
+                            <td>
+                                {% if m.duration == 'Cancelled' %}
+                                <span class="status-expired">Cancelled</span>
+                                {% elif today_date > m.expiry_date %}
+                                <span class="status-expired">Expired</span>
+                                {% else %}
+                                <span class="status-active">Active</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6" style="text-align: center; opacity: 0.7;">No memberships found.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - User Management</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/maintenance">Maintenance</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <div class="glass-card" style="max-width: 600-px;">
+            <h2>User Management</h2>
+            <p style="margin-bottom: 2rem;">Create new users or manage existing system accounts.</p>
+
+            {% if error %}
+            <div class="error-banner">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+            {% endif %}
+            {% if success %}
+            <div class="success-banner">
+                <i class="fas fa-check-circle"></i>
+                {{ success }}
+            </div>
+            {% endif %}
+
+            <form action="/maintenance/user-management" method="post">
+                <div class="form-group">
+                    <label>Account Type</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="account_type" value="new" checked>
+                            <span>New User</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="account_type" value="existing">
+                            <span>Existing User</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter name">
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username *</label>
+                    <input type="text" id="username" name="username" required placeholder="Choose a username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password (if new) / Update Password</label>
+                    <input type="password" id="password" name="password"
+                        placeholder="At least 8 chars, 1 uppercase, 1 number">
+                </div>
+
+                <div class="form-group">
+                    <label>Role</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="role" value="user" checked>
+                            <span>User</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="role" value="admin">
+                            <span>Admin</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Save User</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

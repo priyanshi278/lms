@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Update Book/Movie</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/maintenance">Maintenance</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <div class="glass-card" style="max-width: 600-px;">
+            <h2>Update Book / Movie</h2>
+            <p style="margin-bottom: 2rem;">Modify details of existing items.</p>
+
+            {% if error %}
+            <div class="error-banner">
+                <i class="fas fa-exclamation-circle"></i>
+                {{ error }}
+            </div>
+            {% endif %}
+            {% if success %}
+            <div class="success-banner">
+                <i class="fas fa-check-circle"></i>
+                {{ success }}
+            </div>
+            {% endif %}
+
+            <!-- Step 1: Fetch -->
+            <form action="/maintenance/update-book/fetch" method="post"
+                style="margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 2rem;">
+                <div class="form-group">
+                    <label for="serial_number">Serial Number *</label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="serial_number" name="serial_number"
+                            value="{{ book.serial_number if book else '' }}" required placeholder="e.g. B001"
+                            style="flex: 1;">
+                        <button type="submit" class="btn btn-secondary">Fetch Details</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if book %}
+            <!-- Step 2: Update -->
+            <form action="/maintenance/update-book" method="post">
+                <input type="hidden" name="serial_number" value="{{ book.serial_number }}">
+
+                <div class="form-group">
+                    <label>Item Type</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="type" value="Book" {% if book.type=='Book' %}checked{% endif %}>
+                            <span>Book</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="type" value="Movie" {% if book.type=='Movie' %}checked{% endif %}>
+                            <span>Movie</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" value="{{ book.name }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author/Director</label>
+                    <input type="text" id="author" name="author" value="{{ book.author }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="Tech" {% if book.category=='Tech' %}selected{% endif %}>Tech</option>
+                        <option value="Science" {% if book.category=='Science' %}selected{% endif %}>Science</option>
+                        <option value="Fiction" {% if book.category=='Fiction' %}selected{% endif %}>Fiction</option>
+                        <option value="History" {% if book.category=='History' %}selected{% endif %}>History</option>
+                        <option value="Management" {% if book.category=='Management' %}selected{% endif %}>Management
+                        </option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Update Item</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

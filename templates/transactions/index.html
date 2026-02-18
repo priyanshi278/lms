@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Transactions</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo"><strong>LibGuard</strong> LMS</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            {% if request.cookies.get('user_role') == 'admin' %}
+            <a href="/maintenance">Maintenance</a>
+            {% endif %}
+            <a href="/transactions">Transactions</a>
+            <a href="/reports">Reports</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container animate-fade">
+        <div style="text-align: left; margin-bottom: 2rem;">
+            <h2>Transactions Module</h2>
+            <p>Search books, issue items, and manage returns.</p>
+        </div>
+
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280-px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+
+            <div class="glass-card" style="margin: 0; text-align: left;">
+                <h3 style="color: #4f46e5;"><i class="fas fa-search"></i> Discover</h3>
+                <ul
+                    style="list-style: none; padding: 0; margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="/transactions/book-available" style="color: white; text-decoration: none;">🔍 Book
+                            Availability</a></li>
+                </ul>
+            </div>
+
+            <div class="glass-card" style="margin: 0; text-align: left;">
+                <h3 style="color: #10b981;"><i class="fas fa-book-reader"></i> Borrowing</h3>
+                <ul
+                    style="list-style: none; padding: 0; margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="/transactions/issue-book" style="color: white; text-decoration: none;">📖 Issue
+                            Book</a></li>
+                    <li><a href="/transactions/return-book" style="color: white; text-decoration: none;">📦 Return
+                            Book</a></li>
+                </ul>
+            </div>
+
+            <div class="glass-card" style="margin: 0; text-align: left;">
+                <h3 style="color: #f59e0b;"><i class="fas fa-coins"></i> Payments</h3>
+                <ul
+                    style="list-style: none; padding: 0; margin: 1rem 0; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="/transactions/fine-pay" style="color: white; text-decoration: none;">💰 Fine Pay</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
